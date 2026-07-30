@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: local_rag_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - OLLAMA_MODEL=llama3.2:3b
+      - EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+      - CHROMA_PATH=/app/storage/chroma
+      - STORAGE_DIR=/app/storage/uploads
+      - LOG_DIR=/app/logs
+      - HOST=0.0.0.0
+      - PORT=8000
+    volumes:
+      - ./storage:/app/storage
+      - ./logs:/app/logs
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: local_rag_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
