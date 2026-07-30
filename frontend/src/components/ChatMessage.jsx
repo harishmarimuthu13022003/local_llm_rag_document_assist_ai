@@ -1,5 +1,7 @@
 import React from 'react';
 import { User, Bot, Clock, AlertTriangle } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export default function ChatMessage({ message, onPreviewChunk, onShowRetrievedChunks }) {
   const isUser = message.role === 'user';
@@ -53,7 +55,11 @@ export default function ChatMessage({ message, onPreviewChunk, onShowRetrievedCh
                 </div>
               )}
 
-              <p className="whitespace-pre-wrap">{message.answer}</p>
+              <div className="markdown-content">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {message.answer}
+                </ReactMarkdown>
+              </div>
             </div>
           )}
         </div>
@@ -61,3 +67,4 @@ export default function ChatMessage({ message, onPreviewChunk, onShowRetrievedCh
     </div>
   );
 }
+
