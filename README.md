@@ -157,6 +157,35 @@ Before running the application, verify that your machine meets the following req
 
 ---
 
+## ⚙️ Environment Variables Configuration (.env)
+
+Create a `.env` file in the project root directory with the following configurable parameters:
+
+```env
+# Local LLM & Ollama Settings
+OLLAMA_HOST=http://localhost:11434
+OLLAMA_MODEL=llama3.2:3b
+
+# RAG & Embedding Pipeline Configurations
+EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+TOP_K=4
+CHUNK_SIZE=1000
+CHUNK_OVERLAP=150
+MAX_CONTEXT=4500
+
+# Storage & Database Paths
+CHROMA_PATH=storage/chroma
+STORAGE_DIR=storage/uploads
+LOG_DIR=logs
+
+# Backend Server Configuration
+HOST=0.0.0.0
+PORT=8000
+LOG_LEVEL=INFO
+```
+
+---
+
 ## 🚀 Setup & Execution Guide
 
 ### Option A: Local Native Execution (Recommended)
